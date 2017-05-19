@@ -1,0 +1,88 @@
+
+h2{
+	text-align: center;
+  font: normal 24px Candara;
+  margin: 50px auto 20px auto;
+  padding: 10px;
+}
+table{
+	padding: 10px;
+	margin: 30px auto;
+	border-radius:10px;
+	}
+table td{
+	padding: 10px 10px;
+}
+
+label.error{
+  color: blue;
+	margin-top: 10px;
+	display: block;
+}
+
+
+
+
+#contenedor {
+	border: solid 1px black;
+}
+
+
+#banner ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+#banner li {
+	display: inline;
+	margin-left: 10px;
+}
+#banner li a {
+	color: #666666;
+	text-decoration: none;
+	text-transform: uppercase;
+	font: 1.1em "Trebuchet MS";
+}
+.separador {
+	border-right: 1px solid #666;
+	padding-right:10px;
+}
+
+
+
+#princNav ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background: url(../img/bg_nav.png) repeat-x left top;
+	float: left;
+	border-bottom: 1px solid #000;
+	width: 100%;
+}
+
+#princNav li {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
+
+#princNav li a, #princNav li a:link {
+	color: #FFFFFF;
+	text-decoration: none;
+	padding: .5em 1em;
+	border-right: 1px solid #000;
+	display: block;
+	font: bold 1em "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+}
+
+#princNav li a:hover {
+	background: url(../img/bg_nav_h.png);
+}
+
+#pie {
+	padding: 5px;
+	border-top: 1px solid #000;
+	background-color: #86B500;
+	font-weight: 0.8em;
+	color: #000000;
+}
