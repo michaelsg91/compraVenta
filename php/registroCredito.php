@@ -20,6 +20,14 @@ while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
       $usuario= $registro['idUsuario'];
 }
 
+$sqlcli="SELECT idCliente from cliente where cedula=$cedcli";
+$rescli=$base->prepare($sqlcli);
+$rescli->execute(array());
+
+while($registro=$rescli->fetch(PDO::FETCH_ASSOC)){
+      $cedcli=$registro['idCliente'];
+}
+
 //Ingresando registros en la tabla credito
 $sql="INSERT INTO credito (idCliente,idUsuario,idInventario,fechaInicio,fechaFin,valor,estado) VALUES (:cedcli,:usuario,:producto,:fechaini,:fechafin,:valor,:estado)";
 $resultado=$base->prepare($sql);

@@ -1,5 +1,184 @@
 $(document).ready(function(){
 
+//---------   Procesos ajax    -------------------------------------
+$("#formven #cedcli").keyup(function(){
+    var numdoc=$("#formven #cedcli").val();
+    $.get("php/ajax.php",{num:numdoc}).done(function(data){
+    $("#formven #nombre").html(data);
+    });
+});
+
+$("#formcre #cedcli").keyup(function(){
+    var numdoc=$("#formcre #cedcli").val();
+    $.get("php/ajax.php",{num:numdoc}).done(function(data){
+    $("#formcre #nombre").html(data);
+    });
+});
+
+$("#formemp #cedcli").keyup(function(){
+    var numdoc=$("#formemp #cedcli").val();
+    $.get("php/ajax.php",{num:numdoc}).done(function(data){
+    $("#formemp #nombre").html(data);
+    });
+});
+
+$("#formven #producto").change(function(){
+  var articulo=$("#formven #producto").val();
+  $.get("php/ajax.php",{art:articulo}).done(function(data){
+    $("#formven #compra").html(data);
+  });
+});
+
+$("#formcre #producto").change(function(){
+  var articulo=$("#formcre #producto").val();
+  $.get("php/ajax.php",{art:articulo}).done(function(data){
+    $("#formcre #compra").html(data);
+  });
+});
+
+
+$("#formabcre #credito").change(function(){
+  var credito=$("#formabcre #credito").val();
+  $.get("php/ajax.php",{cre:credito}).done(function(data){
+    $("#formabcre #info").html(data);
+  });
+});
+
+$("#formabemp #empeno").change(function(){
+  var empeno=$("#formabemp #empeno").val();
+  $.get("php/ajax.php",{emp:empeno}).done(function(data){
+    $("#formabemp #info").html(data);
+  });
+});
+
+
+//-------- Ocultar ventanas ------------------------
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").fadeIn(1000);
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+$("#lventa").click(function(e){
+$(".venta").fadeIn(1000);
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+});
+
+$("#lventacre").click(function(e){
+$(".venta").hide();
+$(".credito").fadeIn(1000);
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+});
+
+$("#labonocre").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").fadeIn(1000);
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+});
+$("#lempeno").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").fadeIn(1000);
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+});
+$("#laboemp").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").fadeIn(1000);
+
+});
+$("#lsaldos").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").fadeIn(1000);
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+});
+
+$("#lcliente").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").fadeIn(1000);
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+});
+
+$("#larticulo").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").fadeIn(1000);
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+
+});
+
+$("#linventario").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").fadeIn(1000);
+$(".abonoempeno").hide();
+
+});
+$("#lhelp").click(function(e){
+
+});
 
 
   var fechaHoy=new Date();
@@ -20,7 +199,13 @@ dateFormat: "yy-mm-dd",
 });
 
 });
+$(function(){
+$("#empfin").datepicker({
+minDate: "+0d",
+dateFormat: "yy-mm-dd",
+});
 
+});
 
 $.validator.addMethod("fechaESP", function( value, element){
 			var validator = this;
@@ -124,46 +309,7 @@ $("#form").validate({
 });//-------- End validate function
 
 
-$("#formsueldo").validate({
-  rules:{
-    cedula:{
-      number: true,
-      minlength: 6,
-      maxlength: 11,
-      required: true,
-    },
-    sueldo:{
-      number: true,
-      maxlength: 15,
-      required: true,
-    },
-    dias:{
-      number: true,
-      maxlength: 9,
-      required: true,
-    },
 
-  },//end rules
-
-  messages:{
-    cedula:{
-      required: "Campo requerido",
-      number:"Formato no válido",
-      minlength: "Mínimo 6 digitos",
-      maxlength: "Máximo 11 digitos",
-    },
-    sueldo:{
-      required: "Campo requerido",
-      number:"Formato no válido",
-      maxlength: "Máximo 15 digitos",
-    },
-    dias:{
-      required: "Campo requerido",
-      number:"Formato no válido",
-      maxlength: "Máximo 9 digitos",
-    },
-  }
-});//-------- End validate function
 
 
 

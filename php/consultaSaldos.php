@@ -1,12 +1,7 @@
 <?php
 
-//$confecha=date("Y-m-d",strtotime('-1 day'));
-$confecha=date("Y-m-d");
-
-//$conventa=0;
-//$concredito=0;
-//$conempeno=0;
-//$conabonoEmpeno=0;
+$confecha=date("Y-m-d",strtotime('-1 day'));
+//$confecha=date("Y-m-d");
 
 try{
 

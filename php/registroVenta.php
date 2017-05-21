@@ -17,6 +17,13 @@ while($registro=$resusu->fetch(PDO::FETCH_ASSOC)){
       $usuario=$registro['idUsuario'];
 }
 
+$sqlcli="SELECT idCliente from cliente where cedula=$cedcli";
+$rescli=$base->prepare($sqlcli);
+$rescli->execute(array());
+
+while($registro=$rescli->fetch(PDO::FETCH_ASSOC)){
+      $cedcli=$registro['idCliente'];
+}
 
 //Insertando registros en la tabla venta
 $sqlingven="INSERT INTO venta (idCliente,idUsuario,idInventario,fecha,valor) VALUES (:doccli,:usuario,:producto,:fecha,:valor)";
