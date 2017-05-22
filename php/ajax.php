@@ -71,6 +71,20 @@ echo $nomcli . "&nbsp;" . $apellido . "&nbsp;[" . $nomart . "]&nbsp;&nbsp;&nbsp;
 }
 
 
+
+
+if(isset($_GET['artinv'])){
+$articulo=$_GET['artinv'];
+$sql="SELECT valorEmpeno FROM empenos WHERE idArticulo=$articulo";
+$resultado=$base->prepare($sql);
+$resultado->execute(array());
+
+while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
+  echo  $registro['valorEmpeno'];
+}
+
+}
+
 }catch(Exception $e){
 
 }

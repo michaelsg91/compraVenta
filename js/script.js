@@ -51,6 +51,13 @@ $("#formabemp #empeno").change(function(){
   });
 });
 
+$("#forminv #articulo").change(function(){
+  var articulo=$("#forminv #articulo").val();
+  $.get("php/ajax.php",{artinv:articulo}).done(function(data){
+    $("#forminv #valorcompra").val(data);
+  });
+});
+
 
 //-------- Ocultar ventanas ------------------------
 $(".venta").hide();

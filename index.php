@@ -50,13 +50,27 @@ body{
   try{
   require_once("php/conexion.php");
   $base=conectar::conexion();
-  $sqlPro="SELECT idInventario,nombre from articulo,inventario where articulo.idArticulo=inventario.idInventario and estado='inventario'";
+
+
+
+
+  $sqlPro="SELECT idInventario,nombre from articulo,inventario where articulo.idArticulo=inventario.idInventario and estado='inventario' order by idInventario";
   $sqlcre="SELECT * FROM credito where estado='credito'";
   $sqlciu="SELECT * from ciudad";
   $sqlart="SELECT * from tipoArticulo";
   $sqlemp="SELECT idArticulo,nombre from articulo where idArticulo not in (select idArticulo from inventario) and idArticulo not in (select idArticulo from empenos)";
-  $sqlinv="SELECT idArticulo,nombre from articulo where idArticulo not in (select idArticulo from empenos where estado='empeno' and estado='finalizado') and idArticulo not in (select idArticulo from inventario)";
+  $sqlinv="SELECT idArticulo,nombre from articulo where idArticulo not in (select idArticulo from empenos where estado='empeno') and idArticulo not in (select idArticulo from empenos where estado='finalizado') and idArticulo not in (select idArticulo from inventario)";
   $sqlaboemp="SELECT idEmpeno from empenos where estado='empeno'";
+
+  $sqlvenciemp="UPDATE empenos set estado='vencido' where estado='empeno' and fechaRetiro<now()";
+  $sqlvencicre="UPDATE credito set estado='vencido' where estado='credito' and fechaFin<now()";
+
+
+  $resultado10=$base->prepare($sqlvenciemp);
+  $resultado10->execute(array());
+
+  $resultado11=$base->prepare($sqlvencicre);
+  $resultado11->execute(array());
 
   $resultado2=$base->prepare($sqlPro);
   $resultado2->execute(array());
@@ -78,6 +92,8 @@ body{
 
   $resultado9=$base->prepare($sqlaboemp);
   $resultado9->execute(array());
+
+
 
   $sqlusu="SELECT usuario from usuarios where online=1";
   $resultado5=$base->prepare($sqlusu);
@@ -434,8 +450,14 @@ body{
               ?>
               </select>
           </td>
-          <td><input type="text" name="valorcompra" id="valorcompra"></td>
-          <td><input type="text" name="valorvender" id="valorvender"></td>
+          <tr>
+            <td>Valor Compra:</td>
+            <td><input type="text" name="valorcompra" id="valorcompra"></td>
+          </tr>
+          <tr>
+            <td>Valor a Vender:</td>
+            <td><input type="text" name="valorvender" id="valorvender"></td>
+          </tr>
         </tr>
 
         <tr>
