@@ -15,27 +15,35 @@ table td{
 }
 
 label.error{
-  color: blue;
+  color: red;
 	margin-top: 10px;
-	display: block;
+	padding-left: 20px;
 }
 
 
-
-
-#contenedor {
-	border: solid 1px black;
+#banner{
+  position: relative;
+}
+body{
+  border: 1px solid;
+  position: relative;
+  width: 1300px;
+  margin: auto;
+}
+#banner #logo{
+  margin: 30px;
+}
+#banner ul{
+  position: absolute;
+  right: 60px;
+  bottom: 5px;
 }
 
 
-#banner ul {
-	margin: 0px;
-	padding: 0px;
-	list-style: none;
-}
 #banner li {
 	display: inline;
 	margin-left: 10px;
+
 }
 #banner li a {
 	color: #666666;
@@ -54,7 +62,7 @@ label.error{
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	background: url(../img/bg_nav.png) repeat-x left top;
+	background: url(img/bg_nav.png) repeat-x left top;
 	float: left;
 	border-bottom: 1px solid #000;
 	width: 100%;
@@ -64,6 +72,7 @@ label.error{
 	float: left;
 	padding: 0;
 	margin: 0;
+	cursor: pointer;
 }
 
 #princNav li a, #princNav li a:link {
@@ -72,11 +81,11 @@ label.error{
 	padding: .5em 1em;
 	border-right: 1px solid #000;
 	display: block;
-	font: bold 1em "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+	font: bold 0.9em "Lucida Grande", Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
 }
 
 #princNav li a:hover {
-	background: url(../img/bg_nav_h.png);
+	background: url(img/bg_nav_h.png);
 }
 
 #pie {

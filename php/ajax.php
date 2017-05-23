@@ -48,6 +48,7 @@ while($registro=$resultado->fetch(PDO::FETCH_ASSOC)){
   $fechaFin=$registro['fechaFin'];
 }
 $fechaFin=date("d-m-Y",strtotime($fechaFin));
+
 echo $nomcli . "&nbsp;" . $apellido . "&nbsp;[" . $nomart . "]&nbsp;&nbsp;&nbsp;(" . $valabo . ")&nbsp;" . $valcre . "&nbsp;&nbsp;&nbsp;" . $fechaFin;
 }
 

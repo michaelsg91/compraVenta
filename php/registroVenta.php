@@ -57,10 +57,10 @@ $resdet=$base->prepare($sqldetalle);
 $resdet->execute(array(":idventa"=>$idventa, ":producto"=>$producto));
 
 
-header("location:../index.php?exitoven");
+header("location:../index.php?ex");
 
 }catch(Exception $e){
-  header("location:../index.php?errorven");
+  header("location:../index.php?error");
 }
 
 ?>

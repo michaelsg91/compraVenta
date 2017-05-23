@@ -16,11 +16,10 @@ $resinven=$base->prepare($sqlinven);
 $resinven->execute(array(":articulo"=>$articulo, ":valorcompra"=>$valorcompra,":valorvender"=>$valorvender,":fecha"=>$fecha,":estado"=>$estado));
 
 
-header("location:../index.php?exitoinv");
+header("location:../index.php?ex");
 
 }catch(Exception $e){
-  echo $e->getMessage();
-  echo "Linea del error ". $e->getLine();
+  header("location:../index.php?error");
 }
 
 ?>

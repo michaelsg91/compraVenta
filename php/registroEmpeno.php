@@ -4,6 +4,7 @@ $articulo=$_POST["articulo"];
 $valor=$_POST["valor"];
 $fecha=date("Y-m-d");
 $empfin=$_POST["empfin"];
+$empfin=date("Y-m-d",strtotime($empfin));
 $estado="empeno";
 $valorre=$_POST["valorre"];
 
@@ -40,12 +41,10 @@ $sqlSaldos="INSERT INTO saldos (fecha,valor,tipo) VALUES (:fecha,:valor,:tipo)";
 $ressal=$base->prepare($sqlSaldos);
 $ressal->execute(array(":fecha"=>$fecha, ":valor"=>$valor,":tipo"=>$tipo));
 
-header("location:../index.php?exitoemp");
+header("location:../index.php?ex");
 
 }catch(Exception $e){
-  echo $e->getMessage();
-  echo "Linea del error ". $e->getLine();
-//  header("location:../index.php?erroremp");
+header("location:../index.php?error");
 }
 
 ?>

@@ -54,10 +54,10 @@ if($suma==$valor || $suma>$valor){
 }
 
 
-header("location:../index.php?exitoabemp");
+header("location:../index.php?ex");
 
 }catch(Exception $e){
-  header("location:../index.php?errorabemp");
+  header("location:../index.php?error");
 }
 
 

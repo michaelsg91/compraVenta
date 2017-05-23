@@ -3,6 +3,7 @@
 $cedcli=$_POST["cedcli"];
 $producto=$_POST["producto"];
 $fechafin=$_POST["fechafin"];
+$fechafin=date("Y-m-d",strtotime($fechafin));
 $valor=$_POST["valor"];
 $fechaini=date("Y-m-d");
 $estado="credito";
@@ -52,10 +53,10 @@ $resultado=$base->prepare($sqldetalle);
 $resultado->execute(array(":idcredito"=>$idcredito, ":producto"=>$producto));
 
 
-header("location:../index.php?exitocre");
+header("location:../index.php?ex");
 
 }catch(Exception $e){
-  header("location:../index.php?errorcre");
+  header("location:../index.php?error");
 }
 
 

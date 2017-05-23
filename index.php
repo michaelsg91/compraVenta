@@ -13,105 +13,16 @@
 
 <script src="js/script.js"></script>
 
-
-
-
-<style type="text/css">
-
-#banner{
-  position: relative;
-}
-body{
-  border: 1px solid;
-  position: relative;
-  width: 1300px;
-  margin: auto;
-}
-#banner #logo{
-  margin: 30px;
-}
-#banner ul{
-  position: absolute;
-  right: 60px;
-  bottom: 5px;
-}
-#contenidoPrincipal{
-  position: relative;
-  clear: both;
-}
-
-
-</style>
 </head>
 
 <body>
   <?php
 
-  try{
-  require_once("php/conexion.php");
-  $base=conectar::conexion();
-
-
-
-
-  $sqlPro="SELECT idInventario,nombre from articulo,inventario where articulo.idArticulo=inventario.idInventario and estado='inventario' order by idInventario";
-  $sqlcre="SELECT * FROM credito where estado='credito'";
-  $sqlciu="SELECT * from ciudad";
-  $sqlart="SELECT * from tipoArticulo";
-  $sqlemp="SELECT idArticulo,nombre from articulo where idArticulo not in (select idArticulo from inventario) and idArticulo not in (select idArticulo from empenos)";
-  $sqlinv="SELECT idArticulo,nombre from articulo where idArticulo not in (select idArticulo from empenos where estado='empeno') and idArticulo not in (select idArticulo from empenos where estado='finalizado') and idArticulo not in (select idArticulo from inventario)";
-  $sqlaboemp="SELECT idEmpeno from empenos where estado='empeno'";
-
-  $sqlvenciemp="UPDATE empenos set estado='vencido' where estado='empeno' and fechaRetiro<now()";
-  $sqlvencicre="UPDATE credito set estado='vencido' where estado='credito' and fechaFin<now()";
-
-
-  $resultado10=$base->prepare($sqlvenciemp);
-  $resultado10->execute(array());
-
-  $resultado11=$base->prepare($sqlvencicre);
-  $resultado11->execute(array());
-
-  $resultado2=$base->prepare($sqlPro);
-  $resultado2->execute(array());
-
-  $resultado3=$base->prepare($sqlcre);
-  $resultado3->execute(array());
-
-  $resultado4=$base->prepare($sqlciu);
-  $resultado4->execute(array());
-
-  $resultado6=$base->prepare($sqlart);
-  $resultado6->execute(array());
-
-  $resultado7=$base->prepare($sqlemp);
-  $resultado7->execute(array());
-
-  $resultado8=$base->prepare($sqlinv);
-  $resultado8->execute(array());
-
-  $resultado9=$base->prepare($sqlaboemp);
-  $resultado9->execute(array());
-
-
-
-  $sqlusu="SELECT usuario from usuarios where online=1";
-  $resultado5=$base->prepare($sqlusu);
-  $resultado5->execute(array());
-
-  while($registro=$resultado5->fetch(PDO::FETCH_ASSOC)){
-        $usuario= $registro['usuario'];
-  }
-
-    }catch(Exception $e){
-      echo "Linea del error: " . $e->getLine();
-    }
-
-
+include("php/inicial.php");
 
   ?>
 
-<div id="banner"><img src="img/compra.png" alt="CosmoFarmer 2.0" name="logo" width="413" height="74" id="logo"/>
+<div id="banner"><img src="css/img/compra.png" alt="Banner Compra Venta" name="logo" width="413" height="74" id="logo"/>
   <ul>
     <li class="separador"><?php echo  date("d-m-Y") ?></li>
     <li><?php echo $usuario ?></li></ul>
@@ -119,16 +30,17 @@ body{
 
   <div id="princNav">
   <ul>
-    <li><a id="lventa" href="#">Venta</a></li>
-	  <li><a id="lventacre" href="#">Venta Crédito</a></li>
-    <li><a id="labonocre" href="#">Abono Crédito</a></li>
-	  <li><a id="lempeno" href="#">Empeño</a></li>
-	  <li><a id="laboemp" href="#">Abono Empeño</a></li>
-    <li><a id="lsaldos" href="#">Saldos</a></li>
-    <li><a id="lcliente" href="#">Registrar Cliente</a></li>
-    <li><a id="linventario" href="#">Inventario</a></li>
-    <li><a id="larticulo" href="#">Agregar Artículo</a></li>
-    <li><a id="lhelp" href="#">Help</a></li>
+    <li><a id="lventa">Venta</a></li>
+	  <li><a id="lventacre">Venta Crédito</a></li>
+    <li><a id="labonocre">Abono Crédito</a></li>
+	  <li><a id="lempeno">Empeño</a></li>
+	  <li><a id="laboemp">Abono Empeño</a></li>
+    <li><a id="lsaldos">Saldos</a></li>
+    <li><a id="lcliente">Registrar Cliente</a></li>
+    <li><a id="linventario">Inventario</a></li>
+    <li><a id="larticulo">Agregar Artículo</a></li>
+    <li><a id="lusuario">Agregar Usuario</a></li>
+    <li><a id="lhelp" href="documento/guia.pdf" target="_blank">Help</a></li>
 	  <li><a href="login.php?salir">Salir</a></li>
   </ul>
   </div>
@@ -139,7 +51,7 @@ body{
       <form id="formven" action="php/registroVenta.php" method="post">
         <table>
           <tr>
-            <td>Cedula Cliente:</td>
+            <td>Cédula Cliente:</td>
             <td><input type="text" name="cedcli" id="cedcli"></td>
             <td><p  id="nombre"></p></td>
           </tr>
@@ -161,7 +73,7 @@ body{
             <td><input type="text" name="valor" id="valor"></td>
           </tr>
           <tr>
-              <td colspan="2" align="center"><input type="submit" value="Enviar" id="enviar"></td>
+              <td colspan="2" align="center"><input type="submit" value="OK" id="enviar" name="enviar"></td>
           </tr>
         </table>
       </form>
@@ -173,11 +85,10 @@ body{
       <form id="formcre" action="php/registroCredito.php" method="post">
         <table>
           <tr>
-            <td>Cedula Cliente:</td>
+            <td>Cédula Cliente:</td>
             <td><input type="text" name="cedcli" id="cedcli"></td>
             <td><p  id="nombre"></p></td>
           </tr>
-          <tr>
           <tr>
             <td>Producto:</td>
             <td><select id="producto" name="producto">
@@ -203,7 +114,7 @@ body{
             <td><input type="text" name="valor" id="valor"></td>
           </tr>
           <tr>
-            <td colspan="2" align="center"><input type="submit" name="enviar" value="Enviar"></td>
+            <td colspan="2" align="center"><input type="submit" name="enviar" value="OK"></td>
           </tr>
         </table>
       </form>
@@ -232,7 +143,7 @@ body{
               <td><input type="text" name="valor" id="valor"></td>
             </tr>
             <tr>
-              <td colspan="2" align="center"><input type="submit" name="enviar" value="Enviar"></td>
+              <td colspan="2" align="center"><input type="submit" name="enviar" value="OK"></td>
             </tr>
           </table>
         </form>
@@ -249,7 +160,7 @@ body{
               echo $conventa;
               ?></td>
             </tr>
-            <tr><td>Abono Credito:</td>
+            <tr><td>Abono Crédito:</td>
             <td><?php
             echo $concredito;
 
@@ -313,10 +224,8 @@ body{
               </select>
           </td>
         </tr>
-
-
         <tr>
-          <td colspan="2" align="center"><input type="submit" name="enviar" value="Enviar"></td>
+          <td colspan="2" align="center"><input type="submit" name="enviar" value="Registrar"></td>
         </tr>
       </table>
     </form>
@@ -349,10 +258,8 @@ body{
               </select>
           </td>
         </tr>
-
-
         <tr>
-          <td colspan="2" align="center"><input type="submit" name="enviar" value="Enviar"></td>
+          <td colspan="2" align="center"><input type="submit" name="enviar" value="Agregar"></td>
         </tr>
       </table>
     </form>
@@ -363,13 +270,13 @@ body{
     <form id="formemp" action="php/registroEmpeno.php" method="post">
       <table>
         <tr>
-          <td>Cedula Cliente:</td>
+          <td>Cédula Cliente:</td>
           <td><input type="text" name="cedcli" id="cedcli"></td>
           <td><p  id="nombre"></p></td>
         </tr>
         <tr>
         <tr>
-          <td>Articulo:</td>
+          <td>Artículo:</td>
           <td>
             <select id="articulo" name="articulo">
               <option value="">-- Elige una Opción --</option>
@@ -394,10 +301,8 @@ body{
           <td>Valor a Recibir:</td>
           <td><input type="text" name="valorre" id="valorre"></td>
         </tr>
-
-
         <tr>
-          <td colspan="2" align="center"><input type="submit" name="enviar" value="Enviar"></td>
+          <td colspan="2" align="center"><input type="submit" name="enviar" value="OK"></td>
         </tr>
       </table>
     </form>
@@ -410,7 +315,7 @@ body{
         <form id="formabemp" action="php/registroAbonoEmpeno.php" method="post">
           <table>
             <tr>
-              <td>Empeno:</td>
+              <td>Empeño:</td>
               <td><select id="empeno" name="empeno">
                 <option value="">-- Elige una Opción --</option>
                 <?php
@@ -426,7 +331,7 @@ body{
               <td><input type="text" name="valor" id="valor"></td>
             </tr>
             <tr>
-              <td colspan="2" align="center"><input type="submit" name="enviar" value="Enviar"></td>
+              <td colspan="2" align="center"><input type="submit" name="enviar" value="OK"></td>
             </tr>
           </table>
         </form>
@@ -439,7 +344,7 @@ body{
     <form id="forminv" action="php/registroInventario.php" method="post">
       <table>
         <tr>
-          <td>Articulo:</td>
+          <td>Artículo:</td>
           <td>
             <select id="articulo" name="articulo">
               <option value="">-- Elige una Opción --</option>
@@ -450,6 +355,7 @@ body{
               ?>
               </select>
           </td>
+        </tr>
           <tr>
             <td>Valor Compra:</td>
             <td><input type="text" name="valorcompra" id="valorcompra"></td>
@@ -458,7 +364,6 @@ body{
             <td>Valor a Vender:</td>
             <td><input type="text" name="valorvender" id="valorvender"></td>
           </tr>
-        </tr>
 
         <tr>
           <td colspan="2" align="center"><input type="submit" name="enviar" value="Agregar"></td>
@@ -466,36 +371,49 @@ body{
       </table>
     </form>
 </article>
+
+
+<article class="usuario">
+  <h2>Registrar Usuario</h2>
+    <form id="formusu" action="php/registroUsuario.php" method="post">
+      <table>
+        <tr>
+          <td>Cédula:</td>
+          <td><input type="text" name="cedula" id="cedula"></td>
+        </tr>
+          <tr>
+            <td>Nombre:</td>
+            <td><input type="text" name="nombre" id="nombre"></td>
+          </tr>
+          <tr>
+            <td>Apellido:</td>
+            <td><input type="text" name="apellido" id="apellido"></td>
+          </tr>
+          <tr>
+            <td>Usuario:</td>
+            <td><input type="text" name="usuario" id="usuario"></td>
+          </tr>
+          <tr>
+            <td>Contraseña:</td>
+            <td><input type="password" name="contra" id="contra"></td>
+          </tr>
+        <tr>
+          <td colspan="2" align="center"><input type="submit" name="enviar" value="Agregar"></td>
+        </tr>
+      </table>
+    </form>
+</article>
+
 <article>
-  <p align="center" id="aviso">
-    <?php
-    if (isset($_GET["erroremp"])) {
-      echo "El sueldo ingresado no existe";
-    }
-      ?>
+<p align="center" id="aviso">
 
-      <?php
-      if (isset($_GET["error"])) {
-        echo "El formulario no ha podido ser registrado. Inténtalo más tarde.";
-      }
-      if (isset($_GET["exito"])) {
-        echo "Registrado correctamente.";
+<?php
 
-      }
-        ?>
+if (isset($_GET["error"])) {
+echo "No ha sido posible agregar el registro. <br>Verifique los datos ingresados, compruebe su conexión a la base de datos o intentelo más tarde.";
+}
 
-        <p align="center" id="aviso">
-          <?php
-          if (isset($_GET["error"])) {
-            echo "El sueldo ingresado no existe";
-          }
-            ?>
-
-              <?php
-              if (isset($_GET["error"])) {
-                echo "El sueldo ingresado no existe";
-              }
-                ?>
+?>
 
         </p>
 

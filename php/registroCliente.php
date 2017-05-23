@@ -15,10 +15,10 @@ $sql="INSERT INTO cliente (cedula,nombre,apellido,telefono,idCiudad) VALUES (:ce
 $resultado=$base->prepare($sql);
 $resultado->execute(array(":cedula"=>$cedula, ":nombre"=>$nombre,":apellido"=>$apellido,":telefono"=>$telefono,":ciudad"=>$ciudad));
 
-header("location:../index.php?exitocli");
+header("location:../index.php?ex");
 
 }catch(Exception $e){
-  header("location:../index.php?errorcli");
+  header("location:../index.php?error");
 }
 
 

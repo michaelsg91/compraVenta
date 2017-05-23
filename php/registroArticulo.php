@@ -14,10 +14,10 @@ $sql="INSERT INTO articulo (peso,nombre,idTipoArticulo,fecha) VALUES (:peso,:nom
 $resultado=$base->prepare($sql);
 $resultado->execute(array(":peso"=>$peso, ":nombre"=>$nombre,":tipo"=>$tipo,":fecha"=>$fecha));
 
-header("location:../index.php?exitoart");
+header("location:../index.php?ex");
 
 }catch(Exception $e){
-  header("location:../index.php?errorart");
+  header("location:../index.php?error");
 }
 
 

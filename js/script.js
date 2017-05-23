@@ -64,11 +64,13 @@ $(".venta").hide();
 $(".credito").hide();
 $(".abonoCredito").hide();
 $(".saldos").hide();
-$(".cliente").fadeIn(1000);
+$(".cliente").hide();
 $(".articulo").hide();
-$(".empeno").hide();
+$(".empeno").fadeIn(1000);
 $(".inventario").hide();
 $(".abonoempeno").hide();
+$(".usuario").hide();
+
 
 $("#lventa").click(function(e){
 $(".venta").fadeIn(1000);
@@ -80,6 +82,7 @@ $(".articulo").hide();
 $(".empeno").hide();
 $(".inventario").hide();
 $(".abonoempeno").hide();
+$(".usuario").hide();
 
 });
 
@@ -93,6 +96,7 @@ $(".articulo").hide();
 $(".empeno").hide();
 $(".inventario").hide();
 $(".abonoempeno").hide();
+$(".usuario").hide();
 
 });
 
@@ -106,6 +110,7 @@ $(".articulo").hide();
 $(".empeno").hide();
 $(".inventario").hide();
 $(".abonoempeno").hide();
+$(".usuario").hide();
 
 });
 $("#lempeno").click(function(e){
@@ -118,6 +123,7 @@ $(".articulo").hide();
 $(".empeno").fadeIn(1000);
 $(".inventario").hide();
 $(".abonoempeno").hide();
+$(".usuario").hide();
 
 });
 $("#laboemp").click(function(e){
@@ -130,6 +136,7 @@ $(".articulo").hide();
 $(".empeno").hide();
 $(".inventario").hide();
 $(".abonoempeno").fadeIn(1000);
+$(".usuario").hide();
 
 });
 $("#lsaldos").click(function(e){
@@ -142,6 +149,7 @@ $(".articulo").hide();
 $(".empeno").hide();
 $(".inventario").hide();
 $(".abonoempeno").hide();
+$(".usuario").hide();
 
 });
 
@@ -155,6 +163,7 @@ $(".articulo").hide();
 $(".empeno").hide();
 $(".inventario").hide();
 $(".abonoempeno").hide();
+$(".usuario").hide();
 
 });
 
@@ -167,6 +176,7 @@ $(".cliente").hide();
 $(".articulo").fadeIn(1000);
 $(".empeno").hide();
 $(".inventario").hide();
+$(".usuario").hide();
 $(".abonoempeno").hide();
 
 });
@@ -181,12 +191,23 @@ $(".articulo").hide();
 $(".empeno").hide();
 $(".inventario").fadeIn(1000);
 $(".abonoempeno").hide();
+$(".usuario").hide();
 
 });
-$("#lhelp").click(function(e){
+
+$("#lusuario").click(function(e){
+$(".venta").hide();
+$(".credito").hide();
+$(".abonoCredito").hide();
+$(".saldos").hide();
+$(".cliente").hide();
+$(".articulo").hide();
+$(".empeno").hide();
+$(".inventario").hide();
+$(".abonoempeno").hide();
+$(".usuario").fadeIn(1000);
 
 });
-
 
   var fechaHoy=new Date();
   var mesHoy=fechaHoy.getMonth()+1;
@@ -195,21 +216,21 @@ $("#lhelp").click(function(e){
 
 //------- Start validate function ------------------
 
-jQuery.validator.addMethod("lettersonly", function(value, element) {
+jQuery.validator.addMethod("latino", function(value, element) {
   return this.optional(element) || /^[a-z-á,é,í,ó,ú,ñ,\u0020]+$/i.test(value);
 }, "Formato no válido");
 
 $(function(){
 $("#fechafin").datepicker({
 minDate: "+0d",
-dateFormat: "yy-mm-dd",
+dateFormat: "dd-mm-yy1",
 });
 
 });
 $(function(){
 $("#empfin").datepicker({
 minDate: "+0d",
-dateFormat: "yy-mm-dd",
+dateFormat: "dd-mm-yy",
 });
 
 });
@@ -248,20 +269,17 @@ $.validator.addMethod("fechaESP", function( value, element){
 					return false;
 				}
 			}
-      if(anio<1900){
-        $.validator.messages.fechaESP = "La fecha debe ser mayor al año de 1900.";
-        return false;
-      }
-      if(anio>anioHoy){
-        $.validator.messages.fechaESP = "La fecha es mayor a la actual.";
+
+      if(anio<anioHoy){
+        $.validator.messages.fechaESP = "La fecha es menor a la actual.";
 				return false;
       }else if(anio==anioHoy){
-        if(mes>mesHoy){
-          $.validator.messages.fechaESP = "La fecha es mayor a la actual.";
+        if(mes<mesHoy){
+          $.validator.messages.fechaESP = "La fecha es menor a la actual.";
   				return false;
         }else if(mes==mesHoy){
-          if(dia>diaHoy){
-            $.validator.messages.fechaESP = "La fecha es mayor a la actual.";
+          if(dia<diaHoy){
+            $.validator.messages.fechaESP = "La fecha es menor a la actual.";
     				return false;
           }
         }
@@ -273,52 +291,273 @@ $.validator.addMethod("fechaESP", function( value, element){
 
 
 
-$("#form").validate({
+$("#formven").validate({
   rules:{
-    nombre:{
-      lettersonly: true,
-      required: true,
-    },
-    numdoc:{
+    cedcli:{
       number: true,
       minlength: 6,
       maxlength: 11,
       required: true,
     },
-    fecha:{
+    producto: "required",
+    valor:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+  },//end rules
+
+  messages:{
+    cedcli:{
+      number: "Formato no valido",
+      minlength: "Mínimo 6 dígitos",
+      maxlength: "Máximo 11 dígitos",
+      required: "Campo requerido",
+    },
+    producto: "Campo requerido",
+    valor:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+  }
+});
+
+
+
+$("#formcre").validate({
+  rules:{
+    cedcli:{
+      number: true,
+      minlength: 6,
+      maxlength: 11,
+      required: true,
+    },
+    producto: "required",
+    valor:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+    fechafin:{
       required: true,
       fechaESP: true,
-    },
-    departamento: "required",
-    ciudad: "required",
-    tipodoc: "required",
+    }
+  },//end rules
 
+  messages:{
+    cedcli:{
+      number: "Formato no valido",
+      minlength: "Mínimo 6 dígitos",
+      maxlength: "Máximo 11 dígitos",
+      required: "Campo requerido",
+    },
+    producto: "Campo requerido",
+    valor:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+    fechafin:{
+      required: "Campo requerido",
+    }
+  }
+});
+
+
+$("#formabcre").validate({
+  rules:{
+    credito: "required",
+    valor:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+  },//end rules
+
+  messages:{
+    credito: "Campo requerido",
+    valor:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+  }
+});
+
+$("#formcli").validate({
+  rules:{
+    cedula:{
+      number: true,
+      minlength: 6,
+      maxlength: 11,
+      required: true,
+    },
+    nombre:{
+      latino: true,
+      maxlength: 50,
+      required: true,
+    },
+    apellido:{
+      latino: true,
+      maxlength: 50,
+      required: true,
+    },
+    ciudad: "required",
+    telefono:{
+      number: true,
+      maxlength: 10,
+    },
+  },//end rules
+
+  messages:{
+    cedula:{
+      number: "Formato no valido",
+      maxlength: "Máximo 11 dígitos",
+      required: "Campo requerido",
+    },
+    nombre:{
+      maxlength: "Máximo 50 dígitos",
+      required: "Campo requerido",
+    },
+    apellido:{
+      maxlength: "Máximo 50 dígitos",
+      required: "Campo requerido",
+    },
+    ciudad: "Campo requerido",
+    telefono:{
+      number: "Formato no valido",
+      maxlength: "Máximo 10 dígitos"
+    },
+  }
+});
+
+$("#formart").validate({
+  rules:{
+    nombre:{
+      maxlength: 50,
+      required: true,
+    },
+    tipo: "required",
+    peso:{
+      number: true,
+      maxlength: 18,
+    },
   },//end rules
 
   messages:{
     nombre:{
+      maxlength: "Máximo 50 dígitos",
       required: "Campo requerido",
     },
-    numdoc:{
-      required: "Campo requerido",
-      number:"Formato no válido",
-      minlength: "Mínimo 6 digitos",
-      maxlength: "Máximo 11 digitos",
+    tipo: "Campo requerido",
+    peso:{
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
     },
-    fecha:{
-      required: "Campo requerido",
-    },
-    departamento: "Campo requerido",
-    ciudad: "Campo requerido",
-    tipodoc: "Campo requerido",
-
   }
-});//-------- End validate function
+});
+
+$("#formemp").validate({
+  rules:{
+    cedcli:{
+      number: true,
+      minlength: 6,
+      maxlength: 11,
+      required: true,
+    },
+    articulo: "required",
+    valor:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+    valorre:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+    empfin:{
+      required: true,
+      fechaESP: true,
+    }
+  },//end rules
+
+  messages:{
+    cedcli:{
+      number: "Formato no valido",
+      minlength: "Mínimo 6 dígitos",
+      maxlength: "Máximo 11 dígitos",
+      required: "Campo requerido",
+    },
+    articulo: "Campo requerido",
+    valor:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+    valorre:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+    empfin:{
+      required: "Campo requerido",
+    }
+  }
+});
+
+$("#formabemp").validate({
+  rules:{
+    empeno: "required",
+    valor:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+  },//end rules
+
+  messages:{
+    empeno: "Campo requerido",
+    valor:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+  }
+});
 
 
+$("#forminv").validate({
+  rules:{
+    articulo: "required",
+    valorcompra:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+    valorvender:{
+      required: true,
+      number: true,
+      maxlength: 18,
+    },
+  },//end rules
 
+  messages:{
+    articulo: "Campo requerido",
+    valorcompra:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+    valorvender:{
+      required: "Campo requerido",
+      number: "Formato no valido",
+      maxlength: "Máximo 18 dígitos"
+    },
+  }
+});
 
-
-
+//-------- End validate function
 
 });//--End document
